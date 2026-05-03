@@ -2,6 +2,16 @@ const Parser = require('rss-parser');
 const router = require('express').Router();
 const pool = require('./database');
 
+const RSS_SOURCES = {
+    'coindesk': 'https://www.coindesk.com/arc/outboundfeeds/rss/',
+    'cointelegraph': 'https://cointelegraph.com/rss',
+    'cryptonews': 'https://cryptonews.com/news/feed/',
+};
+
+// API Health Check
+router.get('/ping', (req, res) => {
+    res.json({ status: 'API is healthy' });
+});
 
 router.get('/news/fetch', async (req, res) => {
     try{
@@ -40,11 +50,6 @@ router.get('/news/:source', async (req, res) => {
     }
 });
 
-const RSS_SOURCES = {
-    'coindesk': 'https://www.coindesk.com/arc/outboundfeeds/rss/',
-    'cointelegraph': 'https://cointelegraph.com/rss',
-    'cryptonews': 'https://cryptonews.com/news/feed/',
-};
 
 
 

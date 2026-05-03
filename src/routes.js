@@ -3,10 +3,10 @@ const router = require('express').Router();
 const pool = require('./database');
 
 
-router.get('/news', async (req, res) => {
+router.get('/news/:source', async (req, res) => {
     try{
         const page = parseInt(req.query.page) || 1;
-        const source = req.query.source;
+        const source = req.params.source;
         const pageSize = 20;
         const offset = (page - 1) * pageSize;
         const [rows] = await pool.query('SELECT title, link, pubDate, description FROM crypto_news WHERE source = ? ORDER BY pubDate DESC LIMIT ? OFFSET ?', [source, pageSize, offset]);
